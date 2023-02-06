@@ -26,8 +26,8 @@ const questionaire = () => {
         type: 'list',
         message: 'What are ya gonna do?',
         choices: ['Display Departments', 'Display Roles', 'Display Personnel', 
-        'Display specific Department', 'Display specific Role',
-    'Display specific Employee', 'Display specific Employee Role'],
+        'Create Department', 'Create Role',
+    'Create Employee', 'Update Employee Role'],
     }]).then((answer) => {
         switch(answer.qA){
             case 'Display Departments':
@@ -42,20 +42,20 @@ const questionaire = () => {
                     displayPersonnel();
                     break;
 
-                    case 'Display specific Department':
-                    displayspecificDepartment();
+                    case 'Create Department':
+                        createDepartment();
                     break;
 
-                    case 'Display specific Role':
-                        displayspecificRole();
+                    case 'Create Role':
+                        createRole();
                         break;
 
-                        case 'Display specific Employee':
-                            displayspecificEmployee();
+                        case 'Create Employee':
+                            createEmployee();
                             break;
 
-                            case 'Display specific Employee Role':
-                                displayspecificemployeeRole();
+                            case 'Update Employee Role':
+                                updateemployeeRole();
                                 break;
 
                                 default:
@@ -65,21 +65,21 @@ const questionaire = () => {
 }
 
 const displayDepartments = () => {
-connection.query(`SELECT * FROM department`, (err, res) => {
-console.table(res);
+connection.query (`SELECT * FROM department`, (err, res) => {
+console.table (res);
 questionaire();
 });
 };
 
 const displayRoles = () => {
-    connection.query(`SELECT * FROM role`, (err, res) => {
-    console.table(res);
+    connection.query (`SELECT * FROM role`, (err, res) => {
+    console.table (res);
     questionaire();
     });
     };
 
     const displayPersonnel = () => {
-        connection.query(`SELECT employee.id, employee.first_name AS 'First Name', employee.last_name AS 'Last Name',
+        connection.query (`SELECT employee.id, employee.first_name AS 'First Name', employee.last_name AS 'Last Name',
         role.title AS Title, department.name AS Department,
         CONCAT('$', format(role.salary,0)) AS Salary, CONCAT(manager.first_name, '', 
         manager.last_name) AS Manager
@@ -89,9 +89,24 @@ const displayRoles = () => {
         LEFT JOIN employee AS manager ON employee.manager_id = manager.id
         ORDER BY employee.id ASC;
         `, (err, res) => {
-console.table(res);
+console.table (res);
 questionaire();
         });
     };
 
+    const createDepartment = () => {
+        inquirer.prompt ([{
+            name: 'createDepartment',
+            type: 'input',
+            message: 'Enter Department Name?',
+        }])
+        .then ((answer) => {
+            let sql = `INSERT INTO department (name) VALUES (?)`;
+            connection.query (sql, answer.createDepartment, (err, res) => {
+                displayDepartments();
+            });
+        });
+    }
+
     
+
