@@ -65,5 +65,15 @@ const questionaire = () => {
 }
 
 const displayDepartments = () => {
-
+connection.query(`SELECT * FROM department`, (err, res) => {
+console.table(res);
+questionaire();
+});
 };
+
+const displayRoles = () => {
+    connection.query(`SELECT * FROM role`, (err, res) => {
+    console.table(res);
+    questionaire();
+    });
+    };
