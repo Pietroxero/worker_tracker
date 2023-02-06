@@ -77,3 +77,21 @@ const displayRoles = () => {
     questionaire();
     });
     };
+
+    const displayPersonnel = () => {
+        connection.query(`SELECT employee.id, employee.first_name AS 'First Name', employee.last_name AS 'Last Name',
+        role.title AS Title, department.name AS Department,
+        CONCAT('$', format(role.salary,0)) AS Salary, CONCAT(manager.first_name, '', 
+        manager.last_name) AS Manager
+        FROM employee
+        JOIN role ON employee.role_id = role.id
+        JOIN department ON role.department_id = department.id
+        LEFT JOIN employee AS manager ON employee.manager_id = manager.id
+        ORDER BY employee.id ASC;
+        `, (err, res) => {
+console.table(res);
+questionaire();
+        });
+    };
+
+    
