@@ -108,5 +108,46 @@ questionaire();
         });
     }
 
-    
+    const createEmployee = () => {
+        let managers = [];
+        let roles = [];
+
+        connection.query(`SELECT * FROM role`, (err, res) => {
+            res.forEach((employee) => {
+                managers.push ({
+                    'name': employee.first_name + "" + employee.last_name,
+                    'value': employee.id
+                });
+            });
+            inquirer.prompt ([
+                {
+                name: 'firstName',
+                type: 'input',
+                message: 'Enter first name of new employee',
+            },
+            {
+name: 'lastName',
+type: 'input',
+message: 'Enter last name of new employee',
+            },
+            {
+                type: 'list',
+                name: 'role',
+                message: 'Choose the role for employee',
+                choices: roles,
+            },
+            {
+                type: 'list',
+                name: 'manager',
+                message: 'Who is the manager for employee',
+                choices: roles,
+            }
+
+        ])
+.then((answer) => {
+    let sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id)`
+})
+
+        })
+    }
 
