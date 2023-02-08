@@ -150,7 +150,7 @@ choices: managers,
                 }
             ])
             .then ((answer) => {
-                let sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${answer.firstName}', '${answer.lastName}', ${parseInt(answer.role)})`
+                let sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${answer.firstName}', '${answer.lastName}', ${parseInt(answer.role)})`;
                 connection.query (sql, (err, res) => {
                     displayPersonnel();
                 });
@@ -160,5 +160,42 @@ choices: managers,
     }
 
     const createRole = () => {
-        
+        let departments = [];
+connection.query (`SELECT * FROM department`, (err, res) => {
+    res.forEach ((department) => {
+        departments.push ({
+            'name': department.name,
+            'value': department.id
+        });
+    });
+});
+inquirer.prompt ([
+    {
+name: 'roleTitle',
+tye: 'input',
+message: 'Enter new role title'
+    },
+    {
+        name: 'roleSalary',
+        type: 'input',
+        message: 'Enter salary range',
+    },
+    {
+        name: 'departmentId',
+        type: 'list',
+        message: 'Which department is the role assigned to?',
     }
+])
+.then ((answer) => {
+    departments.dorEach ((department) => {
+        if (department.value === answer.departmentId){
+            let sql = `INSERT INTO role (title, salary, department_id) VALUES ('${answer.roleTitle}', ${parseInt(answer.roleSalary)}, ${parseInt(answer.departmentId)})`;
+            connection.query (sql, (err, res) => {
+                displayRoles();
+            });
+        }
+    });
+});
+    }
+
+    
