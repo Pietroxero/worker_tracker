@@ -198,4 +198,48 @@ message: 'Enter new role title'
 });
     }
 
-    
+    const updateemployeeRole = () => {
+let roles = [];
+let employees = [];
+connection.query (`SELECT * FROM employee`, ( err, res) => {
+    res.forEach ((employee) => {
+        employees.push ({
+            'name': employee.first_name + '' + employee.last_name,
+            'value': employee.id
+        });
+    });
+    connection.query(`SELECT * FROM role`, (err, res) => {
+        res.forEach ((role) => {
+            roles.push ({
+                'name': role.title,
+                'value': role.id
+            });
+        });
+        inquirer.prompt
+        ([
+            {
+name: 'employee',
+type: 'list',
+message: 'Please select an employee to update role',
+choices: employees,
+            },
+            {
+name: 'role',
+type: 'list',
+message: 'Please select new role for employee',
+choices: roles,
+            }
+        ])
+        .then ((answer) => {
+            employees.forEach ((employee) => {
+if (employee.value ===answer.employee){
+    let sql = `UPDATE employee Set employee.role_id = ? WHERE employee.id = ?`;
+    connection.query (sql, [answer.role, answer.employee], (err, res) => {
+        displayPersonnel();
+    });
+}
+            });
+        });
+    });
+});
+    }
