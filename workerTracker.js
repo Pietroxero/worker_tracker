@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const cTable = require('console.table');
 const mysql = require('mysql');
+const { rmSync } = require('fs');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -112,42 +113,52 @@ questionaire();
         let managers = [];
         let roles = [];
 
-        connection.query(`SELECT * FROM role`, (err, res) => {
-            res.forEach((employee) => {
-                managers.push ({
-                    'name': employee.first_name + "" + employee.last_name,
-                    'value': employee.id
+        connection.query (`SELECT * FROM role`, (err, res) => {
+            res.forEach ((role) => {
+                roles.push ({
+                    'name': role.title,
+                    'value': role.id
                 });
             });
-            inquirer.prompt ([
+            connection.query (`SELECT * FROM employee`, (err, res) => {
+                res.forEach ((employee) => {
+                    managers.push ({
+                        'name': employee.first_name + '' + employee.last_name
+                    });
+                });
+                inquirer.prompt ([{
+                    name: 'firstName',
+                    type: 'input',
+                    message: 'Enter first name of Employee',
+                },
                 {
-                name: 'firstName',
-                type: 'input',
-                message: 'Enter first name of new employee',
-            },
-            {
 name: 'lastName',
 type: 'input',
-message: 'Enter last name of new employee',
-            },
-            {
-                type: 'list',
-                name: 'role',
-                message: 'Choose the role for employee',
-                choices: roles,
-            },
-            {
-                type: 'list',
-                name: 'manager',
-                message: 'Who is the manager for employee',
-                choices: roles,
-            }
-
-        ])
-.then((answer) => {
-    let sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id)`
-})
-
-        })
+message: 'Enter last name of Employee',
+                },
+                {
+name: 'role',
+type: 'list',
+message: 'Please select employee role',
+choices: roles,
+                },
+                {
+name: 'manager',
+type: 'list',
+message: 'Whom is the manager for employee?',
+choices: managers,
+                }
+            ])
+            .then ((answer) => {
+                let sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${answer.firstName}', '${answer.lastName}', ${parseInt(answer.role)})`
+                connection.query (sql, (err, res) => {
+                    displayPersonnel();
+                });
+            });
+            });
+        });
     }
 
+    const createRole = () => {
+        
+    }
