@@ -1,4 +1,5 @@
 --this will be where we build our db table for the schema
+--this is to be used as the seeds file
 
 DROP DATABASE IF EXISTS worker_trackDB;
 Create DATABASE worker_trackDB;
