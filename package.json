@@ -1,0 +1,19 @@
+{
+  "name": "worker_tracker",
+  "version": "1.0.0",
+  "description": "Node inquirer app to see and manage a department, roles, and wrokers within a company.",
+  "main": "workerTracker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pietroxero/worker_tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pietroxero/worker_tracker/issues"
+  },
+  "homepage": "https://github.com/Pietroxero/worker_tracker#readme"
+}

@@ -1,4 +1,4 @@
-USE employee_trackDB;
+USE worker_trackDB;
 
 INSERT INTO department (name)
 VALUES ('Engineering'), ('Finance'), ('Sales'), ('Legal');

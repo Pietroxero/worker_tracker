@@ -1,11 +1,8 @@
---this will be where we build our db table for the schema
---this is to be used as the seeds file
 
 DROP DATABASE IF EXISTS worker_trackDB;
 Create DATABASE worker_trackDB;
 USE worker_trackDB;
 
---this will be the creation of the tables
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(30),
