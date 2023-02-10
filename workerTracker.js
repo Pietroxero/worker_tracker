@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const cTable = require('console.table');
 const mysql = require('mysql2');
-const { rmSync } = require('fs');
+// const { rmSync } = require('fs');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -183,10 +183,11 @@ message: 'Enter new role title'
         name: 'departmentId',
         type: 'list',
         message: 'Which department is the role assigned to?',
+        choices: departments,
     }
 ])
 .then ((answer) => {
-    departments.dorEach ((department) => {
+    departments.forEach ((department) => {
         if (department.value === answer.departmentId){
             let sql = `INSERT INTO role (title, salary, department_id) VALUES ('${answer.roleTitle}', ${parseInt(answer.roleSalary)}, ${parseInt(answer.departmentId)})`;
             connection.query (sql, (err, res) => {

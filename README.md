@@ -2,6 +2,8 @@
 # worker_tracker
 
 ## Description
+The goal of this challenge was to use SQL and JS and create a content management system (CMS). The challenge was to
+build a command-line application from scratch to manage a companies employee database, this would use node.js, inquirer and mysql.
 
 ## User Story
 AS A business owner
@@ -32,4 +34,4 @@ THEN I am prompted to select an employee to update and their new role and this i
 ## Deployment
 Github Repo: https://github.com/Pietroxero/worker_tracker
 
-Video:
+Video:  https://drive.google.com/file/d/1u9OjE0jQx4G44tq8gFpsbOxhgGcGgen2/view 
