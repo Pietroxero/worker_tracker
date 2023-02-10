@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/Pietroxero/worker_tracker/issues"
   },
-  "homepage": "https://github.com/Pietroxero/worker_tracker#readme"
+  "homepage": "https://github.com/Pietroxero/worker_tracker#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^8.2.4",
+    "mysql2": "^3.1.2"
+  }
 }
